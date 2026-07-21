@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= titulo %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar__brand">
+      <span class="topbar__logo">A</span>
+      <div>
+        <h1 class="topbar__title">Agenda de Contactos</h1>
+        <p class="topbar__subtitle">Panel de administración</p>
+      </div>
+    </div>
+    <div class="topbar__source">
+      <span class="dot" id="dot-estado"></span>
+      <span id="texto-estado">Conectando con agenda.php&hellip;</span>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <section class="panel panel--form">
+      <div class="panel__head">
+        <h2>Nuevo contacto</h2>
+        <p>Los campos marcados son obligatorios</p>
+      </div>
+
+      <form id="form-contacto" class="form" novalidate>
+        <label class="campo">
+          <span>Nombre *</span>
+          <input type="text" name="nombre" id="nombre" autocomplete="off" required>
+        </label>
+
+        <label class="campo">
+          <span>Apellido *</span>
+          <input type="text" name="apellido" id="apellido" autocomplete="off" required>
+        </label>
+
+        <label class="campo">
+          <span>Teléfono *</span>
+          <input type="text" name="telefono" id="telefono" autocomplete="off" required>
+        </label>
+
+        <button type="submit" class="boton" id="boton-guardar">Guardar contacto</button>
+
+        <p class="mensaje" id="mensaje-form" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="panel panel--tabla">
+      <div class="panel__head">
+        <h2>Listado de contactos</h2>
+        <div class="panel__acciones">
+          <input type="search" id="buscador" placeholder="Filtrar por nombre, apellido o teléfono&hellip;">
+          <button type="button" class="boton boton--secundario" id="boton-recargar">Recargar</button>
+        </div>
+      </div>
+
+      <div class="tabla-wrap">
+        <table class="tabla" id="tabla-contactos">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Teléfono</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-tabla">
+            <tr><td colspan="4" class="tabla__vacio">Cargando contactos&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="statusbar">
+    <span id="statusbar-total">0 contactos</span>
+    <span id="statusbar-filtrados"></span>
+    <span class="statusbar__fuente">Fuente: raydelto.org/agenda.php</span>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
