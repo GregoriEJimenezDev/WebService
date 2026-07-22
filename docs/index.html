@@ -1,106 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agenda de Contactos</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
-
-  <header class="topbar">
-    <div class="topbar__brand">
-      <div class="topbar__logo">A</div>
-      <div>
-        <h1 class="topbar__title">Agenda de Contactos</h1>
-        <p class="topbar__subtitle">Panel de administración</p>
-      </div>
-    </div>
-    <div class="topbar__right">
-      <div class="topbar__source" title="Estado de conexión con la API">
-        <span class="dot" id="dot-estado"></span>
-        <span id="texto-estado">Conectando...</span>
-      </div>
-      <a href="https://www.linkedin.com/in/gregori-evangelista-jimenez-5a077932b/" target="_blank" rel="noopener noreferrer" class="topbar__social" title="LinkedIn - Gregori Evangelista Jiménez">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-    </div>
-  </header>
-
-  <main class="layout">
-
-    <section class="panel panel--form">
-      <div class="panel__head">
-        <h2><i class="fas fa-user-plus"></i> Nuevo contacto</h2>
-        <p>Los campos marcados son obligatorios</p>
-      </div>
-
-      <form id="form-contacto" class="form" novalidate>
-        <label class="campo">
-          <span><i class="fas fa-user"></i> Nombre <em>*</em></span>
-          <input type="text" name="nombre" id="nombre" placeholder="Ej: Juan" autocomplete="off" required>
-        </label>
-
-        <label class="campo">
-          <span><i class="fas fa-user"></i> Apellido <em>*</em></span>
-          <input type="text" name="apellido" id="apellido" placeholder="Ej: Pérez" autocomplete="off" required>
-        </label>
-
-        <label class="campo">
-          <span><i class="fas fa-phone"></i> Teléfono <em>*</em></span>
-          <input type="text" name="telefono" id="telefono" placeholder="Ej: 809-555-1234" autocomplete="off" required>
-        </label>
-
-        <button type="submit" class="boton" id="boton-guardar">
-          <i class="fas fa-save"></i> <span>Guardar contacto</span>
-        </button>
-
-        <p class="mensaje" id="mensaje-form" role="status" aria-live="polite"></p>
-      </form>
-    </section>
-
-    <section class="panel panel--tabla">
-      <div class="panel__head">
-        <h2><i class="fas fa-address-book"></i> Listado de contactos</h2>
-        <div class="panel__acciones">
-          <div class="buscador-wrap">
-            <i class="fas fa-search buscador-icono"></i>
-            <input type="search" id="buscador" placeholder="Filtrar contactos...">
-          </div>
-          <button type="button" class="boton boton--icono" id="boton-recargar" title="Recargar">
-            <i class="fas fa-sync-alt"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="tabla-wrap">
-        <table class="tabla" id="tabla-contactos">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Teléfono</th>
-            </tr>
-          </thead>
-          <tbody id="cuerpo-tabla">
-            <tr><td colspan="4" class="tabla__vacio"><i class="fas fa-spinner fa-spin"></i> Cargando contactos...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="statusbar">
-    <span id="statusbar-total"><i class="fas fa-address-book"></i> 0 contactos</span>
-    <span id="statusbar-filtrados"></span>
-    <span class="statusbar__fuente">
-      <i class="fas fa-database"></i> raydelto.org/agenda.php
-    </span>
-  </footer>
-
-  <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda de Contactos</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
