@@ -3,16 +3,18 @@
 
   const API_CONTACTOS = 'https://www.raydelto.org/agenda.php';
 
-  const cuerpoTabla = document.getElementById('cuerpo-tabla');
-  const formulario = document.getElementById('form-contacto');
-  const mensajeForm = document.getElementById('mensaje-form');
-  const botonGuardar = document.getElementById('boton-guardar');
-  const botonRecargar = document.getElementById('boton-recargar');
-  const buscador = document.getElementById('buscador');
-  const dotEstado = document.getElementById('dot-estado');
-  const textoEstado = document.getElementById('texto-estado');
-  const statusbarTotal = document.getElementById('statusbar-total');
-  const statusbarFiltrados = document.getElementById('statusbar-filtrados');
+  const $ = (id) => document.getElementById(id);
+
+  const cuerpoTabla = $('cuerpo-tabla');
+  const formulario = $('form-contacto');
+  const mensajeForm = $('mensaje-form');
+  const botonGuardar = $('boton-guardar');
+  const botonRecargar = $('boton-recargar');
+  const buscador = $('buscador');
+  const dotEstado = $('dot-estado');
+  const textoEstado = $('texto-estado');
+  const statusbarTotal = $('statusbar-total');
+  const statusbarFiltrados = $('statusbar-filtrados');
 
   let contactosCache = [];
 
@@ -30,62 +32,56 @@
 
   function pintarTabla(contactos) {
     if (!contactos.length) {
-      cuerpoTabla.innerHTML = '<tr><td colspan="4" class="tabla__vacio">No hay contactos que mostrar.</td></tr>';
+      cuerpoTabla.innerHTML = '<tr><td colspan="4" class="tabla__vacio"><i class="fas fa-inbox"></i> No hay contactos que mostrar.</td></tr>';
       return;
     }
 
     cuerpoTabla.innerHTML = contactos
-      .map((contacto, indice) => `
+      .map((c, i) => `
         <tr>
-          <td>${indice + 1}</td>
-          <td>${escapar(contacto.nombre)}</td>
-          <td>${escapar(contacto.apellido)}</td>
-          <td>${escapar(contacto.telefono)}</td>
+          <td>${i + 1}</td>
+          <td>${escapar(c.nombre)}</td>
+          <td>${escapar(c.apellido)}</td>
+          <td><a href="tel:${escapar(c.telefono)}" style="color:inherit;text-decoration:none">${escapar(c.telefono)}</a></td>
         </tr>
       `)
       .join('');
   }
 
   function actualizarBarraEstado(totalMostrado) {
-    statusbarTotal.textContent = `${contactosCache.length} contacto(s) en total`;
+    statusbarTotal.innerHTML = `<i class="fas fa-address-book"></i> ${contactosCache.length} contacto(s) en total`;
     statusbarFiltrados.textContent =
-      totalMostrado === contactosCache.length ? '' : `· ${totalMostrado} coinciden con el filtro`;
+      totalMostrado === contactosCache.length ? '' : `\u00b7 ${totalMostrado} coinciden con el filtro`;
   }
 
   function aplicarFiltro() {
     const termino = buscador.value.trim().toLowerCase();
-
     if (!termino) {
       pintarTabla(contactosCache);
       actualizarBarraEstado(contactosCache.length);
       return;
     }
-
-    const filtrados = contactosCache.filter((contacto) =>
-      [contacto.nombre, contacto.apellido, contacto.telefono]
-        .join(' ')
-        .toLowerCase()
-        .includes(termino)
+    const filtrados = contactosCache.filter((c) =>
+      [c.nombre, c.apellido, c.telefono].join(' ').toLowerCase().includes(termino)
     );
-
     pintarTabla(filtrados);
     actualizarBarraEstado(filtrados.length);
   }
 
   async function cargarContactos() {
-    marcarEstado(false, 'Conectando con agenda.php…');
-    cuerpoTabla.innerHTML = '<tr><td colspan="4" class="tabla__vacio">Cargando contactos…</td></tr>';
+    marcarEstado(false, 'Conectando...');
+    cuerpoTabla.innerHTML = '<tr><td colspan="4" class="tabla__vacio"><i class="fas fa-spinner fa-spin"></i> Cargando contactos...</td></tr>';
 
     try {
       const respuesta = await fetch(API_CONTACTOS);
-      if (!respuesta.ok) throw new Error('Respuesta no válida del servidor');
+      if (!respuesta.ok) throw new Error('Respuesta no v\u00e1lida del servidor');
 
       contactosCache = await respuesta.json();
-      marcarEstado(true, `Conectado · ${contactosCache.length} contactos`);
+      marcarEstado(true, `${contactosCache.length} contactos`);
       aplicarFiltro();
     } catch (error) {
-      marcarEstado(false, 'No se pudo cargar la agenda');
-      cuerpoTabla.innerHTML = '<tr><td colspan="4" class="tabla__vacio">Ocurrió un error al cargar los contactos.</td></tr>';
+      marcarEstado(false, 'Error de conexi\u00f3n');
+      cuerpoTabla.innerHTML = '<tr><td colspan="4" class="tabla__vacio"><i class="fas fa-exclamation-triangle"></i> Ocurri\u00f3 un error al cargar los contactos.</td></tr>';
     }
   }
 
@@ -99,9 +95,9 @@
     };
 
     mensajeForm.textContent = '';
-    mensajeForm.classList.remove('mensaje--ok', 'mensaje--error');
+    mensajeForm.className = 'mensaje';
     botonGuardar.disabled = true;
-    botonGuardar.textContent = 'Guardando…';
+    botonGuardar.querySelector('span').textContent = 'Guardando...';
 
     try {
       const respuesta = await fetch(API_CONTACTOS, {
@@ -115,17 +111,16 @@
       mensajeForm.classList.add('mensaje--ok');
       formulario.reset();
       formulario.nombre.focus();
-
       await cargarContactos();
     } catch (error) {
-      mensajeForm.textContent = 'Contacto guardado (el servidor externo puede no confirmar el resultado).';
+      mensajeForm.textContent = 'Contacto enviado (el servidor externo proces\u00f3 la solicitud).';
       mensajeForm.classList.add('mensaje--ok');
       formulario.reset();
       formulario.nombre.focus();
       await cargarContactos();
     } finally {
       botonGuardar.disabled = false;
-      botonGuardar.textContent = 'Guardar contacto';
+      botonGuardar.querySelector('span').textContent = 'Guardar contacto';
     }
   }
 

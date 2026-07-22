@@ -5,20 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agenda de Contactos</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
   <header class="topbar">
     <div class="topbar__brand">
-      <span class="topbar__logo">A</span>
+      <div class="topbar__logo">A</div>
       <div>
         <h1 class="topbar__title">Agenda de Contactos</h1>
         <p class="topbar__subtitle">Panel de administración</p>
       </div>
     </div>
-    <div class="topbar__source">
-      <span class="dot" id="dot-estado"></span>
-      <span id="texto-estado">Conectando con agenda.php&hellip;</span>
+    <div class="topbar__right">
+      <div class="topbar__source" title="Estado de conexión con la API">
+        <span class="dot" id="dot-estado"></span>
+        <span id="texto-estado">Conectando...</span>
+      </div>
+      <a href="https://www.linkedin.com/in/gregori-evangelista-jimenez-5a077932b/" target="_blank" rel="noopener noreferrer" class="topbar__social" title="LinkedIn - Gregori Evangelista Jiménez">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
     </div>
   </header>
 
@@ -26,27 +32,29 @@
 
     <section class="panel panel--form">
       <div class="panel__head">
-        <h2>Nuevo contacto</h2>
+        <h2><i class="fas fa-user-plus"></i> Nuevo contacto</h2>
         <p>Los campos marcados son obligatorios</p>
       </div>
 
       <form id="form-contacto" class="form" novalidate>
         <label class="campo">
-          <span>Nombre *</span>
-          <input type="text" name="nombre" id="nombre" autocomplete="off" required>
+          <span><i class="fas fa-user"></i> Nombre <em>*</em></span>
+          <input type="text" name="nombre" id="nombre" placeholder="Ej: Juan" autocomplete="off" required>
         </label>
 
         <label class="campo">
-          <span>Apellido *</span>
-          <input type="text" name="apellido" id="apellido" autocomplete="off" required>
+          <span><i class="fas fa-user"></i> Apellido <em>*</em></span>
+          <input type="text" name="apellido" id="apellido" placeholder="Ej: Pérez" autocomplete="off" required>
         </label>
 
         <label class="campo">
-          <span>Teléfono *</span>
-          <input type="text" name="telefono" id="telefono" autocomplete="off" required>
+          <span><i class="fas fa-phone"></i> Teléfono <em>*</em></span>
+          <input type="text" name="telefono" id="telefono" placeholder="Ej: 809-555-1234" autocomplete="off" required>
         </label>
 
-        <button type="submit" class="boton" id="boton-guardar">Guardar contacto</button>
+        <button type="submit" class="boton" id="boton-guardar">
+          <i class="fas fa-save"></i> <span>Guardar contacto</span>
+        </button>
 
         <p class="mensaje" id="mensaje-form" role="status" aria-live="polite"></p>
       </form>
@@ -54,10 +62,15 @@
 
     <section class="panel panel--tabla">
       <div class="panel__head">
-        <h2>Listado de contactos</h2>
+        <h2><i class="fas fa-address-book"></i> Listado de contactos</h2>
         <div class="panel__acciones">
-          <input type="search" id="buscador" placeholder="Filtrar por nombre, apellido o teléfono&hellip;">
-          <button type="button" class="boton boton--secundario" id="boton-recargar">Recargar</button>
+          <div class="buscador-wrap">
+            <i class="fas fa-search buscador-icono"></i>
+            <input type="search" id="buscador" placeholder="Filtrar contactos...">
+          </div>
+          <button type="button" class="boton boton--icono" id="boton-recargar" title="Recargar">
+            <i class="fas fa-sync-alt"></i>
+          </button>
         </div>
       </div>
 
@@ -72,7 +85,7 @@
             </tr>
           </thead>
           <tbody id="cuerpo-tabla">
-            <tr><td colspan="4" class="tabla__vacio">Cargando contactos&hellip;</td></tr>
+            <tr><td colspan="4" class="tabla__vacio"><i class="fas fa-spinner fa-spin"></i> Cargando contactos...</td></tr>
           </tbody>
         </table>
       </div>
@@ -81,9 +94,11 @@
   </main>
 
   <footer class="statusbar">
-    <span id="statusbar-total">0 contactos</span>
+    <span id="statusbar-total"><i class="fas fa-address-book"></i> 0 contactos</span>
     <span id="statusbar-filtrados"></span>
-    <span class="statusbar__fuente">Fuente: raydelto.org/agenda.php</span>
+    <span class="statusbar__fuente">
+      <i class="fas fa-database"></i> raydelto.org/agenda.php
+    </span>
   </footer>
 
   <script src="app.js"></script>
